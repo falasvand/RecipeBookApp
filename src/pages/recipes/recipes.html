@@ -1,0 +1,71 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="onNewRecipe()" *ngIf="isAuthenticated()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onLogin()" *ngIf="!isAuthenticated()">
+        <ion-icon name="log-in"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="onLogout()" *ngIf="isAuthenticated()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Recipes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="cards-bg" *ngIf="recipeListRef$">
+  <ion-card *ngFor="let recipe of recipeListRef$ | async">
+    <img [src]="recipe.imageUrl" height="200px" (click)="onLoadRecipe(recipe)" />
+    <ion-card-content (click)="onLoadRecipe(recipe)">
+      <ion-card-title>
+        {{ recipe.title }}
+      </ion-card-title>
+      <p>
+        {{ recipe.directions }}
+      </p>
+    </ion-card-content>
+    <ion-row no-padding>
+      <ion-col text-left *ngIf="recipe.difficulty == 'Simple'">
+        <button ion-button clear small color="golden" icon-start>
+          <ion-icon name='nutrition'></ion-icon>
+          {{ recipe.difficulty }}
+        </button>
+      </ion-col>
+      <ion-col text-left *ngIf="recipe.difficulty == 'Moderate'">
+        <button ion-button clear small color="golden" icon-start>
+          <ion-icon name='nutrition'></ion-icon>
+          <ion-icon name='nutrition'></ion-icon>
+          {{ recipe.difficulty }}
+        </button>
+      </ion-col>
+      <ion-col text-left *ngIf="recipe.difficulty == 'Difficult'">
+        <button ion-button clear small color="golden" icon-start>
+          <ion-icon name='nutrition'></ion-icon>
+          <ion-icon name='nutrition'></ion-icon>
+          <ion-icon name='nutrition'></ion-icon>
+          {{ recipe.difficulty }}
+        </button>
+      </ion-col>
+
+      <ion-col text-right *ngIf="isAuthenticated()">
+        <button ion-button clear small color="danger" icon-start *ngIf="!isExistingFavorite(recipe)" onclick="this.disabled=true"
+                (click)="onAddToFavorites(recipe)">
+          <ion-icon name='heart'></ion-icon>
+          Favorite
+        </button>
+        <button ion-button clear small color="danger" icon-start (click)="onRemoveFromFavorites(recipe)" onclick="this.disabled=true"
+                *ngIf="isExistingFavorite(recipe)">
+          <ion-icon name='trash'></ion-icon>
+          Unfavorite
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

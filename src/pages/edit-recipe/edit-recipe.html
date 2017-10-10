@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onLogout()" *ngIf="isAuthenticated()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ mode }} Recipe</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form *ngIf="recipeForm" [formGroup]="recipeForm" (ngSubmit)="onSubmitRecipe()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Title</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Directions</ion-label>
+        <ion-textarea formControlName="directions"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Difficulty</ion-label>
+        <ion-select formControlName="difficulty">
+          <ion-option *ngFor="let option of difficultyOptions" [value]="option">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Image URL</ion-label>
+        <ion-input type="text" formControlName="imageUrl"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="button" ion-button block clear (click)="onManageIngredients()">Manage Ingredients</button>
+    <ion-list formArrayName="ingredients" *ngIf="ingredients != null">
+      <ion-item *ngFor="let ingCtrl of recipeForm.get('ingredients').controls; let i = index">
+        <ion-label floating>Name</ion-label>
+        <ion-input type="text" [formControlName]="i"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="submit" block [disabled]="!recipeForm.valid">Submit {{ mode }} Recipe</button>
+  </form>
+</ion-content>

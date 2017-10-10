@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onLogin()" *ngIf="!isAuthenticated()">
+        <ion-icon name="log-in"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="onLogout()" *ngIf="isAuthenticated()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Shopping list</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form (ngSubmit)="onAddItem(f)" #f="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Ingredient</ion-label>
+        <ion-input type="text" name="ingredientName" ngModel required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Amount</ion-label>
+        <ion-input type="number" name="ingredientAmount" ngModel required></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="submit" block [disabled]="!f.valid">Add Item</button>
+  </form>
+
+  <ion-list>
+    <ion-item *ngFor="let item of shoppingListItems; let i = index">
+      <ion-icon name="cart" item-start (tap)="onEditItem(i, item)"></ion-icon>
+      <h2 (tap)="onEditItem(i, item)">{{ item.name }} ({{ item.amount }})</h2>
+      <ion-icon name="close" item-end (click)="onRemoveItem(i)"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

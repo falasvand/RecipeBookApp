@@ -1,0 +1,26 @@
+<ion-content class="background">
+  <ion-card>
+    <ion-card-header>
+      Sign In
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list no-line>
+        <form (ngSubmit)="onLogin(f)" #f="ngForm">
+          <ion-item>
+            <ion-input type="text" name="email" placeholder="Email" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="password" name="password" placeholder="Password" ngModel required></ion-input>
+          </ion-item>
+          <button ion-button block type="submit">
+            <ion-icon name="key"></ion-icon>Login
+          </button>
+        </form>
+        <button ion-button clear text-center (click)="onNavigateToSignup()" small block color="light">Click here to Register</button>
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

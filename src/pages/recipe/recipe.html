@@ -1,0 +1,73 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onLogout()" *ngIf="isAuthenticated()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ recipe.title }} Recipe</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h2>{{ recipe.title }}</h2>
+        <div class="subtitle" *ngIf="recipe.difficulty == 'Simple'" text-center>
+          <ion-icon name="nutrition" icon-start></ion-icon>
+          {{ recipe.difficulty }}
+        </div>
+        <div class="subtitle" *ngIf="recipe.difficulty == 'Moderate'" text-center>
+          <ion-icon name="nutrition" icon-start></ion-icon>
+          <ion-icon name="nutrition" icon-start></ion-icon>
+          {{ recipe.difficulty }}
+        </div>
+        <div class="subtitle" *ngIf="recipe.difficulty == 'Difficult'" text-center>
+          <ion-icon name="nutrition" icon-start></ion-icon>
+          <ion-icon name="nutrition" icon-start></ion-icon>
+          <ion-icon name="nutrition" icon-start></ion-icon>
+          {{ recipe.difficulty }}
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="recipe">
+      <ion-col>
+        <img [src]="recipe.imageUrl" />
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="recipe">
+      <ion-col>
+        <p>
+          <strong>Directions:</strong><br>
+          {{ recipe.directions }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="(recipe) && (recipe.ingredients) && (recipe.ingredients.length > 0)">
+      <ion-col>
+        <strong>Ingredients:</strong>
+        <ion-list>
+          <ion-item *ngFor="let ingredient of recipe.ingredients">
+            {{ ingredient.name }}
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="(recipe) && (recipe.ingredients) && (recipe.ingredients.length > 0)">
+      <ion-col>
+        <button ion-button clear (click)="onAddIngredientsToShoppingList(recipe.ingredients)">Add Ingredients to Shopping List</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="isAuthenticated()">
+      <ion-col>
+        <button ion-button outline (click)="onEditRecipe()" block>Edit Recipe</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button outline (click)="onDeleteRecipe(recipe)" block color="danger">Delete Recipe</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

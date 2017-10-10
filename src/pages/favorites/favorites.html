@@ -1,0 +1,58 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onLogin()" *ngIf="!isAuthenticated()">
+        <ion-icon name="log-in"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="onLogout()" *ngIf="isAuthenticated()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Favorites</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-row *ngIf="isAuthenticated()">
+    <ion-col>
+      <ion-card *ngFor="let fav of favoriteListRef$ | async" padding (click)="onSelectFavorite(fav)">
+        <ion-row>
+          <ion-col col-3 align-self-center>
+            <img [src]="fav.imageUrl" class="thumbnail">
+          </ion-col>
+          <ion-col col-7>
+            <ion-card-header>
+              {{ fav.title }}
+            </ion-card-header>
+            <ion-card-content *ngIf="fav.difficulty == 'Simple'" color="golden">
+                <ion-icon name="nutrition"></ion-icon>
+            </ion-card-content>
+            <ion-card-content *ngIf="fav.difficulty == 'Moderate'" color="golden">
+                <ion-icon name="nutrition"></ion-icon>
+                <ion-icon name="nutrition"></ion-icon>
+            </ion-card-content>
+            <ion-card-content *ngIf="fav.difficulty == 'Difficult'" color="golden">
+                <ion-icon name="nutrition"></ion-icon>
+                <ion-icon name="nutrition"></ion-icon>
+                <ion-icon name="nutrition"></ion-icon>
+            </ion-card-content>
+          </ion-col>
+          <ion-col col-2 align-self-center>
+            <button ion-button clear color="danger" icon-only (click)="onRemoveFromFavorites(fav)" onclick="this.disabled=true">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="!isAuthenticated()" padding>
+    <ion-col>
+      <p>Please login to add and view your favorite recipes!</p>
+    </ion-col>
+  </ion-row>
+</ion-content>
