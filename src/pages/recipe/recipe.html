@@ -61,7 +61,7 @@
         <button ion-button clear (click)="onAddIngredientsToShoppingList(recipe.ingredients)">Add Ingredients to Shopping List</button>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="isAuthenticated()">
+    <ion-row *ngIf="isCreator">
       <ion-col>
         <button ion-button outline (click)="onEditRecipe()" block>Edit Recipe</button>
       </ion-col>

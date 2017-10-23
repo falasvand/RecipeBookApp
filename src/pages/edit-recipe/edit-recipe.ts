@@ -17,7 +17,7 @@ export class EditRecipePage {
   recipeForm: FormGroup;
   recipe: Recipe;
   recipeItemRef$: FirebaseObjectObservable<Recipe>;
-
+  userId: string;
 
   constructor(public navParams: NavParams,
               private actionSheetCtrl: ActionSheetController,
@@ -28,6 +28,7 @@ export class EditRecipePage {
               private authService: AuthService,
               private database: AngularFireDatabase) {
 
+    this.userId = this.authService.getActiveUser().uid;
     const recipeId = this.navParams.get('recipeItemId');
     this.recipeItemRef$ = this.database.object(`recipe-list/${recipeId}`);
 
@@ -90,7 +91,7 @@ export class EditRecipePage {
     if(this.mode == 'Edit') {
       this.recipeItemRef$.update(value);
     }else {
-      this.recipeService.addRecipe(value.title, value.directions, value.difficulty, value.imageUrl, ingredients)
+      this.recipeService.addRecipe(value.title, value.directions, value.difficulty, value.imageUrl, this.userId, ingredients)
     }
 
     this.recipeForm.reset();

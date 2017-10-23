@@ -11,7 +11,7 @@ export class FavoritesService {
   constructor(private authService: AuthService, private database: AngularFireDatabase) {
     if(authService.isAuthenticated()) {
       const userId = this.authService.getActiveUser().uid;
-      this.favoriteListRef$ = this.database.list('favorite-list/' + `${userId}` + '/favorites');
+      this.favoriteListRef$ = this.database.list('favorite-list/' + userId + '/favorites');
     }
   }
 

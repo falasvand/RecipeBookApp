@@ -5,6 +5,7 @@ export class Recipe{
               public directions: string,
               public difficulty: string,
               public imageUrl: string,
+              public creator: string,
               public ingredients?: Ingredient[],
               public $key?: string) {}
 }

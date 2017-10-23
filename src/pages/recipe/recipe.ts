@@ -14,6 +14,7 @@ import {AuthService} from "../../services/auth";
 export class RecipePage {
 
   private recipe: Recipe;
+  isCreator = false;
 
   constructor(private navParams: NavParams,
               private navCtrl: NavController,
@@ -22,6 +23,9 @@ export class RecipePage {
               private recipeService: RecipeService,
               private authService: AuthService) {
     this.recipe = this.navParams.get('recipe');
+    if(this.recipe.creator == this.authService.getActiveUser().uid){
+      this.isCreator = true;
+    }
   }
 
   onEditRecipe() {
